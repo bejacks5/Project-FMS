@@ -1,0 +1,21 @@
+function setup() {
+  createCanvas(800, 600);
+}
+
+function draw() {
+  print(mouseX, mouseY)
+  background("purple");
+  fill("white");
+  rect(270, 50, 295, 75);
+  fill("white");
+  ellipse(165, 330, 200, 100);
+  fill("white");
+  ellipse(670, 330, 200, 100);
+  textSize(50)
+  fill("blue");
+  text('Project FMS', 280, 106);
+  text('Quit', 620, 350);
+  textSize(50);
+  text('Begin',96, 350);
+  
+}

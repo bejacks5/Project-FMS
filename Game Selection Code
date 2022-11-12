@@ -34,10 +34,18 @@ function draw() {
   button3.size(150,100);
   button3.style('color:#2196F3');
   button3.mousePressed(game3);
+  
+  
+  button4 = createButton("MAIN MENU");
+  button4.position(530,450);
+  button4.size(150,100);
+  button4.style('color:blue');
+  button4.mousePressed(MAIN_MENU);
+  
   }
 
 function game1(){
-  window.open();
+  window.open("https://editor.p5js.org/BasilThomas/full/YZoaWsnoP");
 }
 function game2(){
   window.open();
@@ -45,3 +53,8 @@ function game2(){
 function game3(){
   window.open();
 }
+
+function MAIN_MENU(){
+  window.open("https://editor.p5js.org/bejacks5/full/gCYhLWBBZ");
+}
+

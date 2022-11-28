@@ -45,7 +45,7 @@ function draw() {
   }
 
 function game1(){
-  window.open("https://editor.p5js.org/BasilThomas/full/YZoaWsnoP");
+  window.open("https://editor.p5js.org/thomasbasil09/full/Ii8-ddtyO");
 }
 function game2(){
   window.open("https://editor.p5js.org/kneal12/full/8A-cgKKDj");

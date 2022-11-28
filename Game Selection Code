@@ -23,13 +23,13 @@ function draw() {
   button1.style('color:#2196F3');
   button1.mousePressed(game1);
   
-  button2 = createButton("PULL GAME");
+  button2 = createButton("TYPING GAME");
   button2.position(80,300);
   button2.size(150,100);
   button2.style('color:#2196F3');
   button2.mousePressed(game2);
   
-  button3 = createButton("TAP GAME");
+  button3 = createButton("PUSH GAME");
   button3.position(80,450);
   button3.size(150,100);
   button3.style('color:#2196F3');
@@ -48,10 +48,10 @@ function game1(){
   window.open("https://editor.p5js.org/BasilThomas/full/YZoaWsnoP");
 }
 function game2(){
-  window.open();
+  window.open("https://editor.p5js.org/kneal12/full/8A-cgKKDj");
 }
 function game3(){
-  window.open();
+  window.open("https://editor.p5js.org/Intro0/full/hUH8kUWaH");
 }
 
 function MAIN_MENU(){

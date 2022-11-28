@@ -1,0 +1,126 @@
+let letters=[];
+let letter='';
+let userInput='';
+let score = 0;
+let timer = 45;
+//variables 
+
+function setup() {
+  createCanvas(600, 500);
+  gameLayout();
+}
+
+function mainButtons() {
+  let button = createButton("Home");
+  button.style('background-color', 'white');
+  button.position(500,0);
+  button.size(100,50);
+  button.mousePressed(home);
+  
+  let button2 = createButton("Levels");
+  button2.style('background-color', 'white');
+  button2.position(410,0);
+  button2.size(100,50);
+  button2.mousePressed(levels);
+  
+    function levels() {
+    window.open("https://editor.p5js.org/kneal12/full/8A-cgKKDj")
+    }
+  
+    function home() { window.open("https://editor.p5js.org/bejacks5/full/gCYhLWBBZ")
+    }
+}
+
+function gameLayout() {
+  removeElements();
+  clear();
+  background('#D5A4EB');
+  mainButtons();
+  
+  word();
+  textFont('Montserrat', 60);
+  text("Typing Game", 130, 115);
+  
+  let letters = ['a', 'b', 'c', 'd','e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D','E', 'F', 'G',   'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',   'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  letter = random(letters);
+  
+  textFont('Montserrat', 50);
+  text("Type:  " + letter, 150, 330);
+  text("Score: ", 20, 475)
+}
+  
+
+function keyTyped() {
+  let userInput = key;
+  
+  if (userInput == letter) {
+    gameLayout();
+    correct();
+  }
+  else {
+    gameLayout();
+    incorrect();
+  }
+  if (timer == 0) {
+    gameOver();
+  }
+}
+
+
+
+function correct() {
+  fill('lime');
+  strokeWeight('3');
+  stroke('green');
+  textFont('Montserrat', 50);
+  text("CORRECT!", 180, 230);
+  score = score + 1;
+  word();
+  text(score, 158, 475);
+}
+
+function incorrect() {
+  fill('red');
+  strokeWeight('3');
+  stroke('maroon');
+  textFont('Montserrat', 50);
+  text("INCORRECT!", 150, 230);
+  word();
+  text(score, 158, 475);
+}
+
+function draw() {
+  fill('#D5A4EB');
+  stroke('#D5A4EBE0')
+  rect(390, 420, 200, 75);
+  word();
+  text("Time: " + timer, 400, 475);
+  
+  if (frameCount % 60 == 0 && timer > 0) { 
+      timer --;
+    }
+    if (timer == 0) {
+      clear();
+      noLoop();
+      gameOver();
+    }
+}
+
+function gameOver() {
+  clear();
+  mainButtons();
+  background('#D5A4EB');
+  word();
+  textSize(60);
+  text("Typing Game", 130, 115);
+  textSize(50);
+  text("CONGRATULATIONS!", 50, 240);
+  text("Your score was: " + score, 115, 300);
+}
+
+function word() {
+  fill('white');
+  strokeWeight('2.75');
+  stroke('black');
+  textFont('Montserrat', 50);
+}

@@ -1,0 +1,287 @@
+var fft;
+var score = 0;
+hover = null
+grabbed = null
+let circleX = 200;
+let circleY = 300;
+let radius = 30;
+let gameState = 1;
+var particles = [];
+
+function home() { window.open("https://editor.p5js.org/bejacks5/full/gCYhLWBBZ")
+}
+
+function preload() {
+  hit = loadSound('hit.wav');
+  ding = loadSound('ding.wav');
+  cheer = loadSound('cheer.mp3');
+  music = loadSound('music.mp3');
+  
+  let button = createButton("Home");
+  button.style('background-color', 'white');
+  button.style('black');
+  button.position(300,0);
+  button.size(100,50);
+  button.mousePressed(home);
+}
+
+function setup() {
+  createCanvas(400, 400);
+  textAlign(CENTER);
+  textSize (20);
+  ellipseMode(RADIUS)
+  fft = new p5.FFT();
+  music.loop();
+}
+
+function draw() {
+  if (!music.isPlaying()) {
+      music.play();
+      }
+  background(220);
+  fft.analyze()
+  amp = fft.getEnergy (20, 200)
+  if(gameState == 1) {
+    if(amp>230) {
+     translate(random(-5,5),random(-5,5));
+    }
+    levelOne ();
+  }
+  if(gameState == 2) {
+    if(amp>215) {
+     translate(random(-5,5),random(-5,5));
+    }
+    levelTwo ();
+  }
+  if(gameState == 3) {
+    if(amp>200) {
+     translate(random(-5,5),random(-5,5));
+    }
+    levelThree ();
+  }
+  
+
+  
+  m = createVector(mouseX, mouseY)
+  hover = null
+ if(dist(circleX, circleY, mouseX, mouseY)< radius)  {
+   hover = true;
+  }
+  if (hover) cursor('grab')
+  else cursor(ARROW)
+  
+
+  fill(0);
+  text(("Score: " + score), width*3/4, height-20);
+  text(("PUSH!!!"), width/2, height-300);
+  translate(circleX,circleY);
+
+
+  var p = new Particle()
+particles.push(p)
+
+for (var a = particles. length - 1; a >= 0; a--) {
+if (!particles [a].edges()) {
+    if(gameState == 1) {
+    particles [a].update(amp > 230)
+  }
+  if(gameState == 2) {
+    particles [a].update(amp > 215)
+  }
+  if(gameState == 3) {
+    particles [a].update(amp > 200)
+  }
+particles [a].show()
+} else {
+particles.splice(a,1)
+}
+}
+  stroke(255)
+
+  var wave = fft.waveform()
+  
+  for (var t = -1; t <= 1; t += 2) {
+    beginShape ()
+      for (var i = 0; i <= 50; i++) {
+        var index = floor(map(i, 0, 50, 0, wave.     length - 1))
+        var r = map (wave [index], -1, 1, 10, 60)
+        var x = r * sin(i) * t
+        var y = r * cos(i)
+      vertex(x, y)
+      }
+endShape()
+  }
+  if (grabbed == true) fill(50)
+    else if (hover == true) fill(100)
+    else fill(0)
+
+}
+
+function levelOne() {
+  fill(0)
+  text("Level 1", width/4, height-20);
+  if (grabbed == true) fill(50)
+    else if (hover == true) fill(100)
+    else fill(0)
+  c = circle(circleX, circleY, radius)
+  if (circleX > (width - radius)) {
+    circleX = 200;
+    circleY = 300;
+    hit.play()
+    shake();
+    
+  } else
+  if (circleX < radius) {
+    circleX = 200;
+    circleY = 300;
+    hit.play()
+    shake();
+    
+  } else
+  if (circleY > (height - radius)) {
+    circleX = 200;
+    circleY = 300;
+    hit.play()
+    shake();
+  } else
+  if (circleY < radius) {
+    circleX = 200;
+    circleY = 300;
+    score += 1;
+    ding.play()
+  }
+  if (score >= 5) {
+      gameState = 2;
+    
+  }
+  
+}
+
+function levelTwo() {
+  music.rate(2);
+  fill(100);
+  rect(-100,-50,200,600);
+  rect(300,-50,200,600);
+  fill(0);
+  text("Level 2", width/4, height-20);
+  if (grabbed == true) fill(50)
+    else if (hover == true) fill(100)
+    else fill(0)
+  c = circle(circleX, circleY, radius)
+  if (circleX > (width - radius-100)) {
+    circleX = 200;
+    circleY = 300;
+    hit.play()
+  } else
+  if (circleX < radius+100) {
+    circleX = 200;
+    circleY = 300;
+    hit.play()
+  } else
+  if (circleY > (height - radius)) {
+    circleX = 200;
+    circleY = 300;
+    hit.play()
+  } else
+  if (circleY < radius) {
+    circleX = 200;
+    circleY = 300;
+    score += 1;
+    ding.play()
+  }
+  if (score >= 10) {
+      gameState = 3;
+  }
+}
+
+function levelThree() {
+  translate(random(-5,5),random(-5,5));
+  music.rate(3);
+  if(amp>200) {
+     translate(random(-15,15),random(-15,15));
+  }
+  background('#DC143C');
+  fill(100);
+  rect(-50,-50,200,500);
+  rect(250,-50,200,500);
+  fill(0);
+  text("Level 3", width/4, height-20);
+  if (grabbed == true) fill(50)
+    else if (hover == true) fill(100)
+    else fill(0)
+  c = circle(circleX, circleY, radius)
+  if (circleX > (width - radius-150)) {
+    circleX = 200;
+    circleY = 300;
+    hit.play()
+  } else
+  if (circleX < radius+150) {
+    circleX = 200;
+    circleY = 300;
+    hit.play()
+  } else
+  if (circleY > (height - radius)) {
+    circleX = 200;
+    circleY = 300;
+    hit.play()
+  } else
+  if (circleY < radius) {
+    circleX = 200;
+    circleY = 300;
+    score += 1;
+    ding.play()
+  }
+}
+
+function mousePressed() {
+  if (hover) {
+    grabbed = hover
+  }
+}
+
+function mouseReleased() {
+  grabbed = null
+}
+
+function shake() {
+  for (let i = 0; i < 10; i++) {
+    translate(random(-5,5),random(-5,5));
+  }
+}
+
+function mouseDragged() {
+  if ((grabbed) && (dist(circleX, circleY, mouseX, mouseY)< radius)) {
+      circleX += movedX;
+      circleY += movedY;
+    }
+  }
+class Particle {
+  constructor() {
+    this.pos = p5.Vector.random2D().mult(35)
+    this.vel = createVector(0,0)
+    this.acc = this.pos.copy().mult(random(0.0001,     0.00001))
+this.w = random (1, 3)
+this.color = [random (200, 255), random (200, 255), random(200, 255),]
+}
+update(cond) {
+this.vel.add (this.acc)
+this.pos.add(this.vel)
+  if(cond) {
+    this.pos.add(this.vel) 
+    this.pos.add(this.vel)
+    this.pos.add(this.vel)
+  }
+}
+edges () {
+if (this.pos.x < -width / 2 || this.pos.x > width / 2 | this.pos.y < -height / 2 || this.pos.y > height / 2) {
+return true
+} else {
+return false
+}
+}
+  show() {
+noStroke()
+fill(this.color)
+ellipse(this.pos.x, this.pos.y, this.w)
+  }
+}
